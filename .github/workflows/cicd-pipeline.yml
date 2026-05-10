@@ -1,0 +1,105 @@
+name: Java Maven CI/CD Flow
+
+on:
+  push:
+    branches: [ "develop" ]
+
+permissions:
+  contents: write
+  security-events: write
+  actions: read
+
+jobs:
+  # JOB 1: Build, Test, PMD, dan SpotBugs
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Java JDK 21
+      uses: actions/setup-java@v3
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven
+
+    # Perintah 'verify' akan menjalankan: Compile -> Unit Test -> PMD Check -> SpotBugs Check -> Package (JAR)
+    - name: Run Tests and Static Analysis (PMD & SpotBugs)
+      run: mvn -B clean verify 
+
+    - name: Upload JAR Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: java-app-jar
+        path: target/*.jar
+
+  # JOB 2: CodeQL Security Scan
+  security-scan-codeql:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Java JDK 21
+      uses: actions/setup-java@v3
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+
+    # Inisialisasi CodeQL untuk bahasa Java
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: java
+
+    # CodeQL perlu memantau proses build Java
+    - name: Build with Maven for CodeQL
+      run: mvn -B clean install -DskipTests
+
+    # Melakukan analisis dan mengirim hasil ke GitHub Security
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:java"
+
+  # JOB 3: Auto Merge Develop to master
+  merge-to-master:
+    needs: security-scan-codeql # Hanya berjalan jika scan CodeQL sukses/aman
+    runs-on: ubuntu-latest
+    steps:
+    - name: Merge develop to master
+      uses: devmasx/merge-branch@master
+      with:
+        type: now
+        from_branch: develop
+        target_branch: master
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  # JOB 4: Create Tag & Release
+  create-release:
+    needs: merge-to-master
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Master
+      uses: actions/checkout@v4
+      with:
+        ref: master
+
+    - name: Download Final JAR
+      uses: actions/download-artifact@v3
+      with:
+        name: java-app-jar
+        path: .
+
+    - name: Create Release and Upload Artifact
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: release-v1.0.${{ github.run_number }}
+        name: Stable Release v1.0.${{ github.run_number }}
+        draft: false
+        prerelease: false
+        files: ./*.jar
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
