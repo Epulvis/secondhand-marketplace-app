@@ -2,8 +2,6 @@ package secondhand_marketplace.app;
 
 import secondhand_marketplace.akun.ManajerAkun;
 import secondhand_marketplace.pengguna.PembeliPenjual;
-import secondhand_marketplace.produk.Produk;
-import secondhand_marketplace.transaksi.Pemesanan;
 import secondhand_marketplace.utils.Utils;
 
 public class Menu {
@@ -81,6 +79,7 @@ public class Menu {
         }
         System.out.println("Program keluar.");
     }
+
     public int printMenu() {
         int menu;
         if (penggunaAktif != null) {

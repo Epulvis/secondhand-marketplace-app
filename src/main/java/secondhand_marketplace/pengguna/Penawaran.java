@@ -1,6 +1,6 @@
 package secondhand_marketplace.pengguna;
+
 import secondhand_marketplace.produk.Produk;
-import java.util.ArrayList;
 
 // Class Penawaran
 public class Penawaran {
@@ -24,6 +24,10 @@ public class Penawaran {
 
     public String getStatus() {
         return this.status;
+    }
+
+    public PembeliPenjual getPembeli() {
+        return this.pembeli;
     }
 
     public void tampilkanPenawaran() {
