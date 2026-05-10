@@ -1,6 +1,6 @@
 package secondhand_marketplace.pengguna;
+
 import secondhand_marketplace.produk.Produk;
-import java.util.ArrayList;
 
 // Class Penawaran
 public class Penawaran {
@@ -12,8 +12,8 @@ public class Penawaran {
 
     public Penawaran(String id, PembeliPenjual pembeli, Produk barang, double hargaPenawaran) {
         this.id = id;
-        this.pembeli = pembeli;
-        this.barang = barang;
+        this.pembeli = new PembeliPenjual(pembeli);
+        this.barang = new Produk(barang);
         this.hargaPenawaran = hargaPenawaran;
         this.status = "Pending";
     }
@@ -26,8 +26,12 @@ public class Penawaran {
         return this.status;
     }
 
+    public PembeliPenjual getPembeli() {
+        return new PembeliPenjual(this.pembeli);
+    }
+
     public void tampilkanPenawaran() {
-        System.out.printf("Penawaran #%s: Barang - %s, Harga Penawaran - %.2f, Status - %s\n",
+        System.out.printf("Penawaran #%s: Barang - %s, Harga Penawaran - %.2f, Status - %s%n",
                 id, barang.getNamaProduk(), hargaPenawaran, status);
     }
 }
