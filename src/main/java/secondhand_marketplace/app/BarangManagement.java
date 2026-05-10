@@ -46,12 +46,12 @@ public class BarangManagement {
             return;
         }
 
-        System.out.printf("%-3s %-20s %-15s %-5s %-32s %-15s %-15s\n",
+        System.out.printf("%-3s %-20s %-15s %-5s %-32s %-15s %-15s%n",
                 "ID", "Nama Barang", "Harga", "Stok", "Deskripsi", "Lokasi", "Penjual");
         System.out.println(
                 "=======================================================================================================");
         for (Produk produk : barangJualan) {
-            System.out.printf("%-3s %-20s %-15s %-5d %-32s %-15s %-15s\n",
+            System.out.printf("%-3s %-20s %-15s %-5d %-32s %-15s %-15s%n",
                     produk.getIdProduk(),
                     produk.getNamaProduk(),
                     Utils.formatRupiah(produk.getHarga()),
@@ -83,10 +83,10 @@ public class BarangManagement {
 
         for (Produk produk : barangJualan) {
             if (produk.getIdProduk().equals(idBarang)) {
-                if (produk.getPenjual() == null) {
-                    System.out.println("Penjual barang tidak ditemukan.");
-                    return;
-                }
+                // if (produk.getPenjual() == null) {
+                // System.out.println("Penjual barang tidak ditemukan.");
+                // return;
+                // }
 
                 if (produk.getPenjual().equals(penggunaAktif)) {
                     System.out.println("Anda tidak bisa membeli barang yang Anda jual sendiri.");
@@ -157,7 +157,7 @@ public class BarangManagement {
         for (Map.Entry<Produk, Integer> entry : penggunaAktif.getKeranjang().entrySet()) {
             Produk produk = entry.getKey();
             int jumlah = entry.getValue();
-            System.out.printf("%-20s %-15s %-10d %-10s\n",
+            System.out.printf("%-20s %-15s %-10d %-10s%n",
                     produk.getNamaProduk(),
                     Utils.formatRupiah(produk.getHarga()),
                     jumlah,
@@ -230,7 +230,7 @@ public class BarangManagement {
         }
 
         System.out.println("===== Lacak Barang =====");
-        System.out.printf("%-10s %-20s %-8s %-25s %-20s\n", "Penjual", "Nama Produk", "Jumlah", "Status",
+        System.out.printf("%-10s %-20s %-8s %-25s %-20s%n", "Penjual", "Nama Produk", "Jumlah", "Status",
                 "Nama Pembeli");
         System.out.println(
                 "=============================================================================================");
@@ -269,12 +269,12 @@ public class BarangManagement {
         }
 
         System.out.println("===== Daftar Barang dengan Status Pengiriman =====");
-        System.out.printf("%-3s %-20s %-15s %-30s %-15s %-15s\n",
+        System.out.printf("%-3s %-20s %-15s %-30s %-15s %-15s%n",
                 "No.", "Nama Barang", "ID Produk", "Status", "Pembeli", "Penjual");
         System.out.println("==============================================================================");
         for (int i = 0; i < daftarSiapDiubah.size(); i++) {
             Pemesanan pemesanan = daftarSiapDiubah.get(i);
-            System.out.printf("%-3d %-20s %-15s %-30s %-15s\n",
+            System.out.printf("%-3d %-20s %-15s %-30s %-15s%n",
                     i + 1,
                     pemesanan.getProduk().getNamaProduk(),
                     pemesanan.getProduk().getIdProduk(),
@@ -323,7 +323,7 @@ public class BarangManagement {
 
         // Mengubah status pengiriman
         pemesananDipilih.setStatusPengiriman(statusBaru);
-        System.out.printf("Status pengiriman untuk produk '%s' berhasil diperbarui menjadi '%s'.\n",
+        System.out.printf("Status pengiriman untuk produk '%s' berhasil diperbarui menjadi '%s'.%n",
                 pemesananDipilih.getProduk().getNamaProduk(), statusBaru);
     }
 
@@ -352,7 +352,7 @@ public class BarangManagement {
         System.out.println("===== Daftar Barang yang Bisa Direview =====");
         for (int i = 0; i < daftarSudahCheckout.size(); i++) {
             Pemesanan pemesanan = daftarSudahCheckout.get(i);
-            System.out.printf("%d. %s (ID Produk: %s)\n",
+            System.out.printf("%d. %s (ID Produk: %s)%n",
                     i + 1,
                     pemesanan.getProduk().getNamaProduk(),
                     pemesanan.getProduk().getIdProduk());
@@ -507,7 +507,7 @@ public class BarangManagement {
         System.out.println("===========Daftar Barang Jualan Anda============");
         for (int i = 0; i < barangDijual.size(); i++) {
             Produk produk = barangDijual.get(i);
-            System.out.printf("%d. %s (ID: %s)\n", i + 1, produk.getNamaProduk(), produk.getIdProduk());
+            System.out.printf("%d. %s (ID: %s)%n", i + 1, produk.getNamaProduk(), produk.getIdProduk());
         }
 
         // Meminta pengguna memilih barang
@@ -565,7 +565,7 @@ public class BarangManagement {
     }
 
     public ArrayList<Produk> getBarangJualan() {
-        return barangJualan;
+        return new ArrayList<>(barangJualan);
     }
 
     public void buatPenawaran(PembeliPenjual pembeli, Produk barang, double hargaPenawaran) {

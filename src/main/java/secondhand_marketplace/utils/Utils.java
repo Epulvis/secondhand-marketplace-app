@@ -6,7 +6,7 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class Utils {
-    private static Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in, java.nio.charset.StandardCharsets.UTF_8.name());
 
     public static String inputString() {
         return scanner.nextLine();
@@ -16,11 +16,11 @@ public class Utils {
         while (true) {
             try {
                 int result = scanner.nextInt();
-                clearBuffer();  // Menyapu karakter newline yang tertinggal
+                clearBuffer(); // Menyapu karakter newline yang tertinggal
                 return result;
             } catch (InputMismatchException e) {
                 System.out.print("[Error] Input salah! Harap masukkan angka yang valid. Masukkan Ulang : ");
-                clearBuffer();  // Menyapu karakter yang tersisa
+                clearBuffer(); // Menyapu karakter yang tersisa
             }
         }
     }
@@ -29,11 +29,11 @@ public class Utils {
         while (true) {
             try {
                 double result = scanner.nextDouble();
-                clearBuffer();  // Menyapu karakter newline yang tertinggal
+                clearBuffer(); // Menyapu karakter newline yang tertinggal
                 return result;
             } catch (InputMismatchException e) {
                 System.out.print("[Error] Input salah! Harap masukkan angka desimal yang valid. Masukkan Ulang : ");
-                clearBuffer();  // Menyapu karakter yang tersisa
+                clearBuffer(); // Menyapu karakter yang tersisa
             }
         }
     }
@@ -41,7 +41,7 @@ public class Utils {
     // Mengkonsumsi newline atau karakter lain yang tertinggal di buffer
     public static void clearBuffer() {
         if (scanner.hasNextLine()) {
-            scanner.nextLine();  // Konsumsi newline atau karakter sisa lainnya
+            scanner.nextLine(); // Konsumsi newline atau karakter sisa lainnya
         }
     }
 
@@ -50,7 +50,7 @@ public class Utils {
             scanner.close();
         }
     }
-    
+
     public static String formatRupiah(double harga) {
         NumberFormat formatHarga = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
         return formatHarga.format(harga);

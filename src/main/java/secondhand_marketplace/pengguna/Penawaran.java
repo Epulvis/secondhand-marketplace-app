@@ -12,8 +12,8 @@ public class Penawaran {
 
     public Penawaran(String id, PembeliPenjual pembeli, Produk barang, double hargaPenawaran) {
         this.id = id;
-        this.pembeli = pembeli;
-        this.barang = barang;
+        this.pembeli = new PembeliPenjual(pembeli);
+        this.barang = new Produk(barang);
         this.hargaPenawaran = hargaPenawaran;
         this.status = "Pending";
     }
@@ -27,11 +27,11 @@ public class Penawaran {
     }
 
     public PembeliPenjual getPembeli() {
-        return this.pembeli;
+        return new PembeliPenjual(this.pembeli);
     }
 
     public void tampilkanPenawaran() {
-        System.out.printf("Penawaran #%s: Barang - %s, Harga Penawaran - %.2f, Status - %s\n",
+        System.out.printf("Penawaran #%s: Barang - %s, Harga Penawaran - %.2f, Status - %s%n",
                 id, barang.getNamaProduk(), hargaPenawaran, status);
     }
 }

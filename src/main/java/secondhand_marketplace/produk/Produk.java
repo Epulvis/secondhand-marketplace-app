@@ -13,16 +13,28 @@ public class Produk {
     private String lokasi;
     private PembeliPenjual penjual;
     private ArrayList<Review> reviews = new ArrayList<>(); // Daftar review
-    
+
     // Konstruktor utama
-    public Produk(String idProduk, String namaProduk, double harga, int stok, String deskripsi, String lokasi, PembeliPenjual penjual) {
+    public Produk(String idProduk, String namaProduk, double harga, int stok, String deskripsi, String lokasi,
+            PembeliPenjual penjual) {
         this.idProduk = idProduk;
         this.namaProduk = namaProduk;
         this.harga = harga;
         this.stok = stok;
         this.deskripsi = deskripsi;
         this.lokasi = lokasi;
-        this.penjual = penjual;
+        this.penjual = new PembeliPenjual(penjual);
+    }
+
+    public Produk(Produk other) {
+        this.idProduk = other.idProduk;
+        this.namaProduk = other.namaProduk;
+        this.harga = other.harga;
+        this.stok = other.stok;
+        this.deskripsi = other.deskripsi;
+        this.lokasi = other.lokasi;
+        this.penjual = other.penjual;
+        this.reviews = new ArrayList<>(other.reviews);
     }
 
     // Konstruktor overload dengan default deskripsi dan lokasi
@@ -74,9 +86,9 @@ public class Produk {
         this.stok = stok;
     }
 
-//    public void setHarga(double harga) {
-//        this.harga = harga;
-//    }
+    // public void setHarga(double harga) {
+    // this.harga = harga;
+    // }
 
     public void kurangiStok(int quantity) throws IllegalArgumentException {
         if (quantity > stok) {
@@ -85,7 +97,7 @@ public class Produk {
             stok -= quantity;
         }
     }
-    
+
     public void tambahStok(int jumlah) {
         if (jumlah > 0) {
             this.stok += jumlah;
@@ -93,15 +105,15 @@ public class Produk {
             throw new IllegalArgumentException("Jumlah stok yang ditambahkan tidak valid.");
         }
     }
-    
+
     public PembeliPenjual getPenjual() {
-        return penjual;
+        return new PembeliPenjual(this.penjual);
     }
 
     public void tambahReview(Review review) {
         reviews.add(review);
     }
-    
+
     public void lihatReview() {
         if (reviews.isEmpty()) {
             System.out.println("Belum ada review untuk produk ini.");
@@ -110,19 +122,19 @@ public class Produk {
 
         System.out.println("===== Review Produk =====");
         for (int i = 0; i < reviews.size(); i++) {
-            System.out.printf("%d. %s\n", i + 1, reviews.get(i).toString());
+            System.out.printf("%d. %s%n", i + 1, reviews.get(i).toString());
         }
     }
-    
+
     @Override
     public String toString() {
-        return "----------------------------------------------" 
-                + "\nID: " + idProduk 
-                + "\nNama: " + namaProduk 
-                + "\nHarga: " + Utils.formatRupiah(harga)
-                + "\nStok: " + stok 
-                + "\nDeskripsi: " + deskripsi 
-                + "\nLokasi: " + lokasi
-                + "\nPenjual: " + penjual.getUsername();
+        return "----------------------------------------------"
+                + "%nID: " + idProduk
+                + "%nNama: " + namaProduk
+                + "%nHarga: " + Utils.formatRupiah(harga)
+                + "%nStok: " + stok
+                + "%nDeskripsi: " + deskripsi
+                + "%nLokasi: " + lokasi
+                + "%nPenjual: " + penjual.getUsername();
     }
 }

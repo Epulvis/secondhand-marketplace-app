@@ -10,18 +10,18 @@ public class Pemesanan {
     private PembeliPenjual pembeli;
 
     public Pemesanan(Produk produk, int jumlah, PembeliPenjual pembeli) {
-        this.produk = produk;
+        this.produk = new Produk(produk);
         this.jumlah = jumlah;
-        this.pembeli = pembeli;
+        this.pembeli = new PembeliPenjual(pembeli);
         this.statusPengiriman = "Menunggu Dicheckout"; // Status awal
     }
-    
+
     public PembeliPenjual getPembeli() {
-        return pembeli;
+        return new PembeliPenjual(this.pembeli);
     }
 
     public Produk getProduk() {
-        return produk;
+        return new Produk(this.produk);
     }
 
     public int getJumlah() {
@@ -31,7 +31,7 @@ public class Pemesanan {
     public void setJumlah(int jumlah) {
         this.jumlah = jumlah;
     }
-    
+
     public String getStatusPengiriman() {
         return statusPengiriman;
     }
@@ -43,10 +43,10 @@ public class Pemesanan {
     @Override
     public String toString() {
         return String.format("%-10s %-20s %-8d %-25s %-20s",
-            produk.getPenjual().getUsername(),
-            produk.getNamaProduk(),
-            jumlah,
-            statusPengiriman,
-            pembeli.getUsername());
+                produk.getPenjual().getUsername(),
+                produk.getNamaProduk(),
+                jumlah,
+                statusPengiriman,
+                pembeli.getUsername());
     }
 }

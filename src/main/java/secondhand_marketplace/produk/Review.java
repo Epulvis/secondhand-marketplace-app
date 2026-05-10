@@ -8,13 +8,13 @@ public class Review {
     private String komentar;
 
     public Review(PembeliPenjual pengguna, int rating, String komentar) {
-        this.pengguna = pengguna;
+        this.pengguna = new PembeliPenjual(pengguna);
         this.rating = rating;
         this.komentar = komentar;
     }
 
     public PembeliPenjual getPengguna() {
-        return pengguna;
+        return new PembeliPenjual(this.pengguna);
     }
 
     public int getRating() {
@@ -27,7 +27,7 @@ public class Review {
 
     @Override
     public String toString() {
-        return String.format("Rating: %d/5\nKomentar: %s\nDiberikan oleh: %s", 
-                              rating, komentar, pengguna.getUsername());
+        return String.format("Rating: %d/5%nKomentar: %s%nDiberikan oleh: %s",
+                rating, komentar, pengguna.getUsername());
     }
 }

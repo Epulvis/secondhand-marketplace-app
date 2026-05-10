@@ -88,7 +88,7 @@ public class Menu {
             System.out.println("|--------------------------------------------------|");
             System.out.println("|           Belum ada akun yang login              |");
             System.out.println("|--------------------------------------------------|");
-            System.out.println("\n");
+            System.out.println("%n");
         }
         System.out.println("|=================== Daftar Menu ==================|");
         System.out.println("|    1. Register                                   |");

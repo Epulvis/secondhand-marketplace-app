@@ -11,8 +11,8 @@ public class Chat {
 
     // Konstruktor untuk inisialisasi pengirim, penerima, dan pesan
     public Chat(PembeliPenjual pengirim, PembeliPenjual penerima, String pesan) {
-        this.pengirim = pengirim;
-        this.penerima = penerima;
+        this.pengirim = new PembeliPenjual(pengirim);
+        this.penerima = new PembeliPenjual(penerima);
         this.pesan = pesan;
     }
 
@@ -20,7 +20,8 @@ public class Chat {
     public void kirimPesan() {
         Chat chat = new Chat(pengirim, penerima, pesan);
         history.add(chat); // Simpan objek Chat ke riwayat
-        System.out.println("Pesan berhasil dikirim: " + pengirim.getUsername() + " ke " + penerima.getUsername() + ": " + pesan);
+        System.out.println(
+                "Pesan berhasil dikirim: " + pengirim.getUsername() + " ke " + penerima.getUsername() + ": " + pesan);
     }
 
     // Metode untuk menampilkan riwayat chat hanya untuk pengguna yang terlibat
@@ -32,10 +33,12 @@ public class Chat {
             System.out.println("===== Riwayat Chat =====");
             // Periksa semua chat dan tampilkan yang melibatkan penggunaAktif
             for (Chat chat : history) {
-                // Menampilkan chat yang melibatkan penggunaAktif, baik sebagai pengirim maupun penerima
-                if (chat.pengirim.getUsername().equals(penggunaAktif.getUsername()) || 
+                // Menampilkan chat yang melibatkan penggunaAktif, baik sebagai pengirim maupun
+                // penerima
+                if (chat.pengirim.getUsername().equals(penggunaAktif.getUsername()) ||
                         chat.penerima.getUsername().equals(penggunaAktif.getUsername())) {
-                    System.out.println(chat.pengirim.getUsername() + " ke " + chat.penerima.getUsername() + ": " + chat.pesan);
+                    System.out.println(
+                            chat.pengirim.getUsername() + " ke " + chat.penerima.getUsername() + ": " + chat.pesan);
                     ditemukan = true;
                 }
             }
