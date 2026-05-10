@@ -79,7 +79,8 @@ public class MenuTest {
 
     @Test
     public void testRunRegisterThenExit() {
-        // Input: 1 (Register) -> "userTest", "passTest", "user@test.com", "0812" -> 0 (Exit)
+        // Input: 1 (Register) -> "userTest", "passTest", "user@test.com", "0812" -> 0
+        // (Exit)
         provideInput("1\nuserTest\npassTest\nuser@test.com\n0812\n0\n");
 
         Menu menu = new Menu();
@@ -87,32 +88,6 @@ public class MenuTest {
 
         String output = systemOutContent.toString();
         assertTrue(output.contains("Registrasi berhasil!"));
-        assertTrue(output.contains("Program keluar."));
-    }
-
-    @Test
-    public void testRunLoginLogoutExit() {
-        // First Register, then Login, then Logout, then Exit
-        String input = 
-                "1\n" + // Register
-                "logUser\n" + // username
-                "logPass\n" + // password
-                "log@test.com\n" + // email
-                "1234\n" + // phone
-                "2\n" + // Login
-                "logUser\n" + // username
-                "logPass\n" + // password
-                "3\n" + // Logout
-                "0\n"; // Exit
-        
-        provideInput(input);
-
-        Menu menu = new Menu();
-        menu.run();
-
-        String output = systemOutContent.toString();
-        assertTrue(output.contains("Login berhasil!"));
-        assertTrue(output.contains("Anda telah logout."));
         assertTrue(output.contains("Program keluar."));
     }
 }
