@@ -403,6 +403,18 @@ public class BarangManagement {
         }
     }
 
+    private String inputNonEmpty(String prompt) {
+        String value = "";
+        while (value.trim().isEmpty()) {
+            System.out.print(prompt);
+            value = Utils.inputString();
+            if (value.trim().isEmpty()) {
+                System.out.println("[Error] Wajib memasukkan data barang.");
+            }
+        }
+        return value;
+    }
+
     public void tambahBarang(PembeliPenjual penggunaAktif) {
         if (penggunaAktif == null) {
             System.out.println("Harap login terlebih dahulu!");
@@ -413,8 +425,7 @@ public class BarangManagement {
         int stok = -1;
 
         System.out.println("===========Tambah Barang yang Dijual============");
-        System.out.print("Masukkan nama barang: ");
-        String namaBarang = Utils.inputString();
+        String namaBarang = inputNonEmpty("Masukkan nama barang: ");
 
         while (harga < 0) {
             System.out.print("Masukkan harga barang: ");
@@ -432,11 +443,9 @@ public class BarangManagement {
             }
         }
 
-        System.out.print("Masukkan deskripsi barang: ");
-        String deskripsi = Utils.inputString();
+        String deskripsi = inputNonEmpty("Masukkan deskripsi barang: ");
 
-        System.out.print("Masukkan lokasi barang: ");
-        String lokasi = Utils.inputString();
+        String lokasi = inputNonEmpty("Masukkan lokasi barang: ");
 
         Produk produkBaru = new Produk("P" + (barangJualan.size() + 1), namaBarang, harga, stok, deskripsi, lokasi,
                 penggunaAktif);
