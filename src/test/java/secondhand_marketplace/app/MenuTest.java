@@ -93,16 +93,17 @@ public class MenuTest {
 
     @Test
     public void testSimpleLogicWithAssertion() {
-        // Pengujian logic sederhana untuk validasi fungsionalitas di Menu dasar
+        // Pengujian logic sederhana untuk validasi fungsionalitas Menu dasar
         Menu menu = new Menu();
 
-        // Menu tidak boleh Null
+        // Memastikan objek menu berhasil diinstansiasi dengan benar (tidak null)
         org.junit.Assert.assertNotNull("Objek Menu harus berhasil diinisialisasi", menu);
 
-        // Exit dengan input 0
+        // Melakukan simulasi input exit langsung (pilihan menu 0)
         provideInput("0\n");
         int selectedMenu = menu.printMenu();
-        
+
+        // Menggunakan Java Assertion/JUnit Assertion untuk mengecek kembalian nilai logic
         assertEquals("Memilih menu 0 harus mengembalikan nilai 0 untuk keluar", 0, selectedMenu);
         assertTrue("Output harus mengandung pesan penutup program", systemOutContent.toString().contains("Keluar"));
     }
